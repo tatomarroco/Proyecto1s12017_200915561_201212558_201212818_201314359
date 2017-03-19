@@ -1,7 +1,11 @@
 package edd.proyecto1_android;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.content.Entity;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +13,9 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.os.AsyncTask;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+
 import android.widget.TextView;
 import android.widget.Toast;
 import android.util.Log;
@@ -28,11 +35,32 @@ public class MainActivity extends AppCompatActivity {
 
     public static OkHttpClient webClient = new OkHttpClient();
     public static String res = "";
-    //Thread hiloImg = new Thread(new hPost());
     private Button btnLogin;
-    private TextView txtName;
-    private AutoCompleteTextView txtUsuario;
+    private AutoCompleteTextView txtUser;
+    private EditText txtPassword;
+    private AutoCompleteTextView txtEmp;
+    private AutoCompleteTextView txtDeptom;
+    protected ProgressBar barra;
+
     public static String st;
+    public static String user;
+    public static String password;
+    public static String departamento;
+    public static String empresa;
+
+    protected static final int TIMER_RUNTIME = 2000;
+    protected boolean barraAtiva;
+    protected boolean barrallena;
+
+    public Intent getMenuP() {
+        return MenuP;
+    }
+
+    public void setMenuP(Intent menuP) {
+        MenuP = menuP;
+    }
+
+    Intent MenuP;
 
 
     public static String getRes() {
@@ -51,72 +79,101 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         btnLogin = (Button) findViewById(R.id.btnLogin);
-        txtUsuario = (AutoCompleteTextView) findViewById(R.id.txtUsuario);
-
-
+        txtUser = (AutoCompleteTextView) findViewById(R.id.txtUsuario);
+        txtPassword = (EditText) findViewById(R.id.txtPass);
+        txtEmp = (AutoCompleteTextView) findViewById(R.id.txtEmpresa);
+        txtDeptom = (AutoCompleteTextView) findViewById(R.id.txtDepto);
+        barra = (ProgressBar) findViewById(R.id.Login_Progress);
+        final Intent irAMenu = new Intent(MainActivity.this, menuPrincipalActivity.class);//Moverse entre Layout
+        setMenuP(irAMenu);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent irAMenu = new Intent(MainActivity.this, menuPrincipalActivity.class);//Moverse entre Layout
+
+                setUser(txtUser.getText().toString());
+                setPassword(txtPassword.getText().toString());
+                setEmpresa(txtEmp.getText().toString());
+                setDepartamento(txtDeptom.getText().toString());
+                barra.setVisibility(View.VISIBLE);
+                //showProgress(true);
                 conexionTask d = new conexionTask(); //Hilo
                 d.execute();
-                //st = getRes();
+
+
+
 
                 //txtUsuario.setText(st);
                 //Toast.makeText(MainActivity.this, "Hola " + st, Toast.LENGTH_LONG).show();
                 //System.out.println(getRes());
 
 
-                startActivity(irAMenu);//Se mueve a otro Layout
+
 
             }
         });
     }
 
 
-
-  /*  private class hPost implements Runnable {
-
-        @Override
-        public void run() {
-            while (true) {
-                //pruebaConexion("hola", "Prro");
-
-                METODOS
-
-                try {
-                    Thread.sleep(100);
-
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(MainActivity.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-        }
-
-    }*/
-
-
     //---------------------HILO ASINCRONICO---------------------------//
     private class conexionTask extends AsyncTask<Void,Void,Void>{
-
         @Override
         protected  Void doInBackground(Void... voids){
-            pruebaConexion("hola","prro");
+            barraAtiva = true;
+            try {
+                int waited = 0;
+                while (barraAtiva && (waited< TIMER_RUNTIME)){
+                    Thread.sleep(100);
+                    if(barraAtiva){
+                        waited +=500;
+                        updateProgress(waited);
+                    }
+                }
+                Conexion(getUser(),getPassword(),getEmpresa(),getDepartamento());
 
-            Log.d("Hola mundo","Se está ejecutando proceso en background");
+
+                // Simulate network access.
+
+            } catch (InterruptedException e) {
+                return null;
+            } finally {
+                onContinue();
+            }
+
+
+
             return null;
         }
 
+        public void updateProgress(final int timePassed){
+            if(null != barra){
+                final int progress = barra.getMax() * timePassed / TIMER_RUNTIME;
+                barra.setProgress(progress);
+            }
+        }
 
-        public void pruebaConexion(String opcion, String palabra) {
+        public void onContinue(){
+            Log.d("Mensaje Final: ","La Barra Ha Cargado");
+            barrallena = true;
+            if(getRes().equalsIgnoreCase("true")){
+                boolean s = true;
+                Sesion sesionvar = new Sesion(s,getUser());
+                if(sesionvar != null && barrallena ){
+                    startActivity(getMenuP());
+                }
+            }
+
+        }
+
+        public void Conexion(String user, String contrasenia, String empresa, String Depto) {
             RequestBody formBody = new FormEncodingBuilder()
-                    .add("p", palabra)
-                    //.add("opcion", opcion)
+                    .add("usuario", user)
+                    .add("contrasenia", contrasenia)
+                    .add("empresa", empresa)
+                    .add("departamento", Depto)
                     .build();
             String r = "";
-            setRes(getString("meto", formBody));
+            setRes(getString("Login", formBody));
             System.out.println(getRes());
         }
 
@@ -140,5 +197,62 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+  /*  @TargetApi(Build.VERSION_CODES.LOLLIPOP_MR1)
+    private void showProgress(final boolean show) {
+        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+        // for very easy animations. If available, use these APIs to fade-in
+        // the progress spinner.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+
+            ProgressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+            ProgressBar.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    ProgressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        } else {
+            // The ViewPropertyAnimator APIs are not available, so simply show
+            // and hide the relevant UI components.
+            ProgressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+        }
+    }*/
+
+
+
+    public static String getUser() {
+        return user;
+    }
+
+    public static void setUser(String user) {
+        MainActivity.user = user;
+    }
+
+    public static String getPassword() {
+        return password;
+    }
+
+    public static void setPassword(String password) {
+        MainActivity.password = password;
+    }
+
+    public static String getDepartamento() {
+        return departamento;
+    }
+
+    public static void setDepartamento(String departamento) {
+        MainActivity.departamento = departamento;
+    }
+
+    public static String getEmpresa() {
+        return empresa;
+    }
+
+    public static void setEmpresa(String empresa) {
+        MainActivity.empresa = empresa;
+    }
 
 }

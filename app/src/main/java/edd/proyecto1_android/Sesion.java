@@ -5,6 +5,15 @@ package edd.proyecto1_android;
  */
 
 public class Sesion {
+    private boolean sesion = false;
+    private String User;
+
+    public Sesion(){}
+
+    public Sesion(boolean sesion,String User){
+           this.sesion = sesion;
+           this.User = User;
+    }
 
     public boolean isSesion() {
         return sesion;
@@ -14,6 +23,12 @@ public class Sesion {
         this.sesion = sesion;
     }
 
-    private boolean sesion = false;
+    public String getUser() {
+        return User;
+    }
 
+    public void setUser(String user) {
+        User = user;
+    }
+    
 }
