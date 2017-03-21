@@ -157,10 +157,14 @@ public class MainActivity extends AppCompatActivity {
             barrallena = true;
             if(getRes().equalsIgnoreCase("true")){
                 boolean s = true;
-                Sesion sesionvar = new Sesion(s,getUser());
+                Session sesionvar = new Session(s,getUser());
+                sesionvar.setSession(sesionvar);
                 if(sesionvar != null && barrallena ){
                     startActivity(getMenuP());
                 }
+            }else{
+                barra.setVisibility(View.GONE);
+
             }
 
         }
@@ -182,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
         public String getString(String metodo, RequestBody formBody) {
 
             try {
-                URL url = new URL("http://192.168.1.45:5000/" + metodo);
+                URL url = new URL("http://192.168.1.63:5000/" + metodo);
                 Request request = new Request.Builder().url(url).post(formBody).build();
                 Response response = webClient.newCall(request).execute();//Aqui obtiene la respuesta en dado caso si hayas pues un return en python
                 String response_string = response.body().string();//y este seria el string de las respuesta

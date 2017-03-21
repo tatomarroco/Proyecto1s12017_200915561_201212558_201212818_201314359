@@ -23,4 +23,20 @@
     <string name="lbltiempo">Tiempo De Renta</string>
     <string name="lbldia">Días</string>
     <string name="btnRegresar">Regresar al Menú</string>
+    <string name="txtName">Nombre</string>
+    <string name="txtDescrip">Descripción</string>
+
+    <string-array name="ListaPrueba">
+        <item>Seleccionar...</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+
+    <string-array name="ListaPrueba2">
+        <item>Seleccionar...</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
 </resources>

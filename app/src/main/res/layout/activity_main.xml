@@ -45,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/Login_name"
-        android:layout_marginBottom="46dp"
+        android:layout_marginBottom="49dp"
         android:width="200dp"
         android:textColor="@color/colorText"
         android:textColorHint="@color/colorText"
