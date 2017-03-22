@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimarybg"
+    tools:context="edd.proyecto1_android.RentaActivity"
+    tools:ignore="ExtraText">
+
+
+    <RelativeLayout
+        android:layout_width="385dp"
+        android:layout_height="725dp"
+        tools:scrollbars="vertical"
+        tools:scrollbarAlwaysDrawVerticalTrack="true"
+        tools:scrollbarTrackVertical="@color/colorAccent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        >
+
+
+
+        <TextView
+            android:id="@+id/lblIdProducto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lblProd"
+            app:layout_constraintBottom_toTopOf="@+id/lactiv"
+            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.512"
+            android:layout_marginTop="70dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <Spinner
+            android:id="@+id/lactiv"
+            android:layout_width="200dp"
+            android:layout_height="37dp"
+            android:entries="@array/ListaPrueba"
+            app:layout_constraintBottom_toTopOf="@+id/txtNombreUser"
+            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="24dp"
+            android:layout_below="@+id/lblIdProducto"
+            android:layout_centerHorizontal="true" />
+
+        <EditText
+            android:id="@+id/txtNombreUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/txtName"
+            android:inputType="textPersonName"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:ignore="LabelFor"
+            tools:layout_editor_absoluteY="354dp"
+            android:layout_marginTop="38dp"
+            android:layout_below="@+id/lactiv"
+            android:layout_centerHorizontal="true" />
+
+
+
+        <EditText
+            android:id="@+id/txtDescrip"
+            android:layout_width="210dp"
+            android:layout_height="180dp"
+            android:scrollbars="vertical"
+            android:layout_marginTop="34dp"
+            android:ems="10"
+            android:hint="@string/txtDescrip"
+            android:inputType="textMultiLine"
+            android:layout_below="@+id/txtNombreUser"
+            android:layout_alignEnd="@+id/txtNombreUser" />
+
+        <TextView
+            android:id="@+id/lblTiempo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtDescrip"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="46dp"
+            android:text="@string/lbltiempo" />
+
+        <Spinner
+            android:id="@+id/ComboBox2"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:entries="@array/ListaPrueba2"
+            android:layout_below="@+id/lblTiempo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp" />
+
+        <TextView
+            android:id="@+id/lbldias"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lbldia"
+            android:layout_alignTop="@+id/ComboBox2"
+            android:layout_toEndOf="@+id/lblIdProducto"
+            android:layout_alignBottom="@+id/ComboBox2" />
+
+        <Button
+            android:id="@+id/btnRentar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_Rentar"
+            android:layout_below="@+id/ComboBox2"
+            android:layout_alignStart="@+id/lblTiempo"
+            android:layout_marginTop="27dp" />
+
+        <Button
+            android:id="@+id/btnRegresarMp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btnRegresar"
+            android:layout_below="@+id/btnRentar"
+            android:layout_alignStart="@+id/ComboBox2"
+            android:layout_marginStart="31dp"
+            android:layout_marginTop="24dp" />
+    </RelativeLayout>
+
+
+
+
+</ScrollView>

@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name"></string>
+    <!--PARA LOGIN-->
+    <string name="LoginApp_name">Iniciar Sesión</string>
+    <string name="Login_btn">Iniciar sesión</string>
+    <string name="Login_name">Usuario</string>
+    <string name="Login_pass">Contraseña</string>
+    <string name="Login_emp">Empresa</string>
+    <string name="Login_depto">Departamento</string>
+    <!--PARA MENU PRINCIPAL-->
+    <string name="MenuName">Menu Principal</string>
+    <string name="btnMp_Rentar">Solicitar Renta</string>
+    <string name="btnMp_RegDev">Registrar Devolución</string>
+    <string name="btnMp_CloseS">Cerrar Sesión</string>
+    <!--PARA RENTAS-->
+    <string name="RentaName">Rentas</string>
+    <string name="btn_Rentar">Rentar</string>
+    <!--PARA DEVOLUCIONES-->
+    <string name="DevName">Devoluciones</string>
+    <string name="btn_Devolver">Devolver</string>
+    <!--UNIVERSALES-->
+    <string name="lblProd">ID Del Producto</string>
+    <string name="lbltiempo">Tiempo De Renta</string>
+    <string name="lbldia">Días</string>
+    <string name="btnRegresar">Regresar al Menú</string>
+    <string name="txtName">Nombre</string>
+    <string name="txtDescrip">Descripción</string>
+
+    <string-array name="ListaPrueba">
+        <item>Seleccionar...</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+
+    <string-array name="ListaPrueba2">
+        <item>Seleccionar...</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+</resources>
