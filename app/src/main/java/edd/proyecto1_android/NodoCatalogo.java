@@ -19,6 +19,14 @@ public class NodoCatalogo {
 
     private int pos;
 
+    public NodoCatalogo getNext() {
+        return Next;
+    }
+
+    public void setNext(NodoCatalogo next) {
+        Next = next;
+    }
+
     NodoCatalogo Next;
 
     public NodoCatalogo(String IdProducto, String Nombre, String Descripcion, int pos){

@@ -1,0 +1,8 @@
+digraph G{
+nodo_3 [label=None]
+nodo_3 -> nodo_2nodo_2 [label=None]
+
+}nodo_3 -> nodo_5nodo_5 [label=None]
+
+}
+}

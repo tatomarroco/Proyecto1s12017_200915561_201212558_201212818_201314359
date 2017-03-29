@@ -122,8 +122,13 @@ public class RentaActivity extends AppCompatActivity {
                 Depto = sesionactual.getDepartment();
                 Empresa = sesionactual.getCompany();
                 Fecha = getDateTime();
+
+
+
                 catalogo.setCatalogue(catalogo);
+
                 Enviar();
+
             }
         });
 
@@ -283,15 +288,7 @@ public class RentaActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(final Boolean success) {
             if (success) {
-                //------------------------------AGREGAR AL SPINNER------------------------------------------------------//
-                ArrayAdapter <CharSequence> adapter = new ArrayAdapter <CharSequence> (RentaActivity.this, android.R.layout.simple_spinner_item);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                adapter.add("Seleccionar...");
-                for (int x = 1; x <= catalogo.getLongitud();x++){
-                    adapter.add(catalogo.ObtenerID(x));
-                }
-                ComboBox1.setAdapter(adapter);
-                //------------------------------------------------------------------------------------------------------//
+                AcomodarComboBox();
                 finish();
             } else {
                 d = null;
@@ -384,6 +381,17 @@ public class RentaActivity extends AppCompatActivity {
 
    }
 
+   public void AcomodarComboBox(){
+               //------------------------------AGREGAR AL SPINNER------------------------------------------------------//
+               ArrayAdapter <CharSequence> adapter = new ArrayAdapter <CharSequence> (RentaActivity.this, android.R.layout.simple_spinner_item);
+               adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+               adapter.add("Seleccionar...");
+               for (int x = 1; x <= catalogo.getLongitud();x++){
+                   adapter.add(catalogo.ObtenerID(x));
+               }
+               ComboBox1.setAdapter(adapter);
+               //------------------------------------------------------------------------------------------------------//
+   }
 
 
 
