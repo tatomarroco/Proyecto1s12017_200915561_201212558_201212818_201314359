@@ -1,0 +1,7 @@
+Tareas
+--Administrar--
+	+Crear Usuarios------>deben Guardarse en la Matriz Dispersa
+	+Creacion de Catalogos de Productos----->debe Guardarse en el AVL
+	+Modificación de Activo
+	+Eliminar Activo
+	+
