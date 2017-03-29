@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 import android.content.Entity;
 import android.content.Intent;
 import android.os.Build;
+import android.support.annotation.MainThread;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,10 +37,10 @@ public class MainActivity extends AppCompatActivity {
     public static OkHttpClient webClient = new OkHttpClient();
     public static String res = "";
     private Button btnLogin;
-    private AutoCompleteTextView txtUser;
+    private EditText txtUser;
     private EditText txtPassword;
-    private AutoCompleteTextView txtEmp;
-    private AutoCompleteTextView txtDeptom;
+    private EditText txtEmp;
+    private EditText txtDeptom;
     protected ProgressBar barra;
 
     public static String st;
@@ -52,6 +53,20 @@ public class MainActivity extends AppCompatActivity {
     protected boolean barraAtiva;
     protected boolean barrallena;
 
+    boolean conec = false;
+
+    public boolean isElfalso() {
+        return elfalso;
+    }
+
+    public void setElfalso(boolean elfalso) {
+        this.elfalso = elfalso;
+    }
+
+    boolean elfalso = false;
+
+    final Session sesionvar = new Session();
+
     public Intent getMenuP() {
         return MenuP;
     }
@@ -61,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     Intent MenuP;
-
+    private conexionTask d = null;//Hilo
 
     public static String getRes() {
         return res;
@@ -71,7 +86,9 @@ public class MainActivity extends AppCompatActivity {
         MainActivity.res = res;
     }
 
-
+    @Override
+    public void onBackPressed() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,10 +96,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         btnLogin = (Button) findViewById(R.id.btnLogin);
-        txtUser = (AutoCompleteTextView) findViewById(R.id.txtUsuario);
+        txtUser = (EditText) findViewById(R.id.txtUsuario);
         txtPassword = (EditText) findViewById(R.id.txtPass);
-        txtEmp = (AutoCompleteTextView) findViewById(R.id.txtEmpresa);
-        txtDeptom = (AutoCompleteTextView) findViewById(R.id.txtDepto);
+        txtEmp = (EditText) findViewById(R.id.txtEmpresa);
+        txtDeptom = (EditText) findViewById(R.id.txtDepto);
         barra = (ProgressBar) findViewById(R.id.Login_Progress);
         final Intent irAMenu = new Intent(MainActivity.this, menuPrincipalActivity.class);//Moverse entre Layout
         setMenuP(irAMenu);
@@ -97,8 +114,11 @@ public class MainActivity extends AppCompatActivity {
                 setDepartamento(txtDeptom.getText().toString());
                 barra.setVisibility(View.VISIBLE);
                 //showProgress(true);
-                conexionTask d = new conexionTask(); //Hilo
-                d.execute();
+                d = new conexionTask();
+                d.execute((Void) null);
+
+
+
 
 
 
@@ -116,34 +136,65 @@ public class MainActivity extends AppCompatActivity {
 
 
     //---------------------HILO ASINCRONICO---------------------------//
-    private class conexionTask extends AsyncTask<Void,Void,Void>{
+    public class conexionTask extends AsyncTask<Void,Void,Boolean>{
         @Override
-        protected  Void doInBackground(Void... voids){
-            barraAtiva = true;
-            try {
-                int waited = 0;
-                while (barraAtiva && (waited< TIMER_RUNTIME)){
-                    Thread.sleep(100);
-                    if(barraAtiva){
-                        waited +=500;
-                        updateProgress(waited);
-                    }
-                }
-                Conexion(getUser(),getPassword(),getEmpresa(),getDepartamento());
+        protected  Boolean doInBackground(Void... voids){
 
+
+            try {
+                Conexion(getUser(),getPassword(),getEmpresa(),getDepartamento());
+                if (conec){
+                    barraAtiva = true;
+                    int waited = 0;
+                    while (barraAtiva && (waited< TIMER_RUNTIME)){
+                        Thread.sleep(100);
+                        if(barraAtiva){
+                            waited +=500;
+                            updateProgress(waited);
+                        }
+                    }
+
+                }else{
+                    try{
+                        System.out.println("No hay Conexíon");
+                        return false;
+                    }catch (Exception e){
+                        System.out.println(e.getMessage());
+                        return  false;
+                    }
+
+                }
 
                 // Simulate network access.
 
             } catch (InterruptedException e) {
-                return null;
+                System.out.println(e.getMessage()+"   "+e.getLocalizedMessage());
+                return false;
             } finally {
                 onContinue();
             }
 
-
-
-            return null;
+            return true;
         }
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+            if (success) {
+                finish();
+            } else {
+                d = null;
+                barra.setProgress(0);
+                barra.setVisibility(false ? View.GONE : View.INVISIBLE);
+                if(conec && isElfalso()){
+                    txtUser.setError(getString(R.string.error_Login));
+                    txtUser.requestFocus();
+                }else if(conec==false){
+                    Toast.makeText(MainActivity.this,"¡Hubo un problema de Conexión!",Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        }
+
 
         public void updateProgress(final int timePassed){
             if(null != barra){
@@ -155,21 +206,41 @@ public class MainActivity extends AppCompatActivity {
         public void onContinue(){
             Log.d("Mensaje Final: ","La Barra Ha Cargado");
             barrallena = true;
-            if(getRes().equalsIgnoreCase("true")){
-                boolean s = true;
-                Session sesionvar = new Session(s,getUser());
-                sesionvar.setSession(sesionvar);
-                if(sesionvar != null && barrallena ){
-                    startActivity(getMenuP());
+            if(conec == true){
+                if (getRes().equalsIgnoreCase("true")) {
+                    sesionvar.setSesion(true);
+                    sesionvar.setUser(getUser());
+                    sesionvar.setCompany(getEmpresa());
+                    sesionvar.setDepartment(getDepartamento());
+                    sesionvar.setSession(sesionvar);
+                    if(sesionvar != null && barrallena && sesionvar.isSesion()==true){
+                        startActivity(getMenuP());
+                    }
+                }else {
+                    d = null;
+                    setElfalso(true);
+                    sesionvar.setUser("");
+                    sesionvar.setCompany("");
+                    sesionvar.setDepartment("");
+                    sesionvar.setSesion(false);
+                    sesionvar.setSession(sesionvar);
                 }
             }else{
-                barra.setVisibility(View.GONE);
-
+                /*if(isElfalso()){
+                    try{
+                        //EsFalso();
+                    }catch (Exception e){
+                        System.out.println(e.getMessage()+"   "+e.getLocalizedMessage());
+                    }
+                }*/
             }
 
         }
 
-        public void Conexion(String user, String contrasenia, String empresa, String Depto) {
+
+
+
+        public boolean Conexion(String user, String contrasenia, String empresa, String Depto) {
             RequestBody formBody = new FormEncodingBuilder()
                     .add("usuario", user)
                     .add("contrasenia", contrasenia)
@@ -177,28 +248,55 @@ public class MainActivity extends AppCompatActivity {
                     .add("departamento", Depto)
                     .build();
             String r = "";
-            setRes(getString("Login", formBody));
-            System.out.println(getRes());
+            setRes(getStr("Login", formBody));
+            if(conec) {
+                if (getRes() != null && getRes().equalsIgnoreCase("true")) {
+                    System.out.println("LA MATRIZ RETORNÓ " + getRes());
+                    setElfalso(false);
+                    return true;
+                } else {
+                    setElfalso(true);
+                    return false;
+                }
+            }
+            return true;
         }
 
 
 
-        public String getString(String metodo, RequestBody formBody) {
+
+        public String getStr(String metodo, RequestBody formBody) {
 
             try {
-                URL url = new URL("http://192.168.1.63:5000/" + metodo);
+                URL url = new URL("http://192.168.43.56:5000/" + metodo);
                 Request request = new Request.Builder().url(url).post(formBody).build();
                 Response response = webClient.newCall(request).execute();//Aqui obtiene la respuesta en dado caso si hayas pues un return en python
                 String response_string = response.body().string();//y este seria el string de las respuesta
+                conec = true;
                 return response_string;
             } catch (MalformedURLException ex) {
-                java.util.logging.Logger.getLogger(edd.proyecto1_android.MainActivity.class.getName()).log(Level.SEVERE, null, ex);
+                setRes("");
+                conec = false;
+                System.out.println(ex.getMessage());
+                //java.util.logging.Logger.getLogger(edd.proyecto1_android.MainActivity.class.getName()).log(Level.SEVERE, null, ex);
+               // Toast.makeText(MainActivity.this,ex.getMessage(),Toast.LENGTH_SHORT);
             } catch (Exception ex) {
-                java.util.logging.Logger.getLogger(edd.proyecto1_android.MainActivity.class.getName()).log(Level.SEVERE, null, ex);
+               System.out.println(ex.getMessage());
+                setRes("");
+                conec = false;
+                // java.util.logging.Logger.getLogger(edd.proyecto1_android.MainActivity.class.getName()).log(Level.SEVERE, null, ex);
             }
-            return null;
+            return "";
         }
 
+    }
+
+
+
+    protected void EsFalso(){
+        ;
+       // txtPassword.setError(getString(R.string.error_Login));
+        //txtPassword.requestFocus();
     }
 
   /*  @TargetApi(Build.VERSION_CODES.LOLLIPOP_MR1)

@@ -7,15 +7,40 @@ package edd.proyecto1_android;
 public class Session {
     private boolean sesion = false;
     private String User;
+    private String Department;
+    private String Company;
 
     public static Session ss;
 
+    //*************CONSTRUCTORES*******************************************************************//
     public Session(){}
-
-    public Session(boolean sesion,String User){
-           this.sesion = sesion;
-           this.User = User;
+    //---------------------------------------------------------------------------------------------//
+    public Session(boolean sesion,String Usuario, String Empresa, String Departamento){
+        this.sesion = sesion;
+        this.User = Usuario;
+        this.Company = Empresa;
+        this.Department = Departamento;
     }
+    //*********************************************************************************************//
+
+
+
+    public String getDepartment() {
+        return Department;
+    }
+
+    public void setDepartment(String department) {
+        Department = department;
+    }
+
+    public String getCompany() {
+        return Company;
+    }
+
+    public void setCompany(String company) {
+        Company = company;
+    }
+
 
     public boolean isSesion() {
         return this.sesion;
@@ -35,7 +60,7 @@ public class Session {
 
     /*OBTIENE SECCION ACTUAL Y ATRIBUTOS*/
     public static Session getSession(){
-           return ss;
+        return ss;
     }
 
     public void setSession(Session ss){

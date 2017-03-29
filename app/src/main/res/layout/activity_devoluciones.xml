@@ -1,10 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimarybg"
-    tools:context="edd.proyecto1_android.DevolucionesActivity">
+    tools:context="edd.proyecto1_android.DevolucionesActivity"
+    tools:ignore="ExtraText">
 
-</android.support.constraint.ConstraintLayout>
+
+    <RelativeLayout
+        android:layout_width="385dp"
+        android:layout_height="725dp"
+        tools:scrollbars="vertical"
+        tools:scrollbarAlwaysDrawVerticalTrack="true"
+        tools:scrollbarTrackVertical="@color/colorAccent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        >
+
+
+
+        <TextView
+            android:id="@+id/lblIdProducto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lblProd"
+            app:layout_constraintBottom_toTopOf="@+id/lactiv"
+            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.512"
+            android:layout_marginTop="70dp"
+            android:textColor="@color/colorText"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <Spinner
+            android:id="@+id/lactiv"
+            android:layout_width="200dp"
+            android:layout_height="37dp"
+            android:entries="@array/ListaPrueba"
+            app:layout_constraintBottom_toTopOf="@+id/txtNombreUser"
+            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:layout_below="@+id/lblIdProducto"
+            android:layout_centerHorizontal="true" />
+
+        <EditText
+            android:id="@+id/txtNombreUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/txtName"
+            android:inputType="textPersonName"
+            android:backgroundTint="@color/colorAccent"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:ignore="LabelFor"
+            tools:layout_editor_absoluteY="354dp"
+            android:layout_marginTop="38dp"
+            android:layout_below="@+id/lactiv"
+            android:layout_centerHorizontal="true" />
+
+
+
+        <EditText
+            android:id="@+id/txtDescrip"
+            android:layout_width="210dp"
+            android:layout_height="180dp"
+            android:scrollbars="vertical"
+            android:layout_marginTop="34dp"
+            android:ems="10"
+            android:hint="@string/txtDescrip"
+            android:textColor="@color/colorText"
+            android:inputType="textMultiLine"
+            android:backgroundTint="@color/colorAccent"
+            android:background="@color/colorText"
+            android:layout_below="@+id/txtNombreUser"
+            android:layout_alignEnd="@+id/txtNombreUser" />
+
+        <TextView
+            android:id="@+id/lblTiempo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtDescrip"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="46dp"
+            android:textColor="@color/colorText"
+            android:text="@string/lbltiempo" />
+
+        <TextView
+            android:id="@+id/lbldias"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lbldia"
+            android:textColor="@color/colorText"
+            android:layout_alignTop="@+id/lblday"
+            android:layout_toEndOf="@+id/lblIdProducto"
+             />
+
+        <Button
+            android:id="@+id/btnDevolver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_Devolver"
+            android:layout_marginRight="43dp"
+
+
+            android:layout_below="@+id/lblday"
+            android:layout_alignStart="@+id/lblTiempo"
+            android:layout_marginTop="27dp" />
+
+        <Button
+            android:id="@+id/btnRegresarMp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btnRegresar"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="39dp"
+            android:layout_marginBottom="34dp" />
+
+        <TextView
+            android:id="@+id/lblday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dia"
+            android:layout_below="@+id/lblTiempo"
+            android:layout_alignStart="@+id/lblIdProducto"
+            android:layout_marginTop="12dp" />
+    </RelativeLayout>
+
+</ScrollView>

@@ -18,6 +18,11 @@ public class menuPrincipalActivity extends AppCompatActivity {
 
 
     @Override
+    public void onBackPressed() {
+    }
+
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_principal);
@@ -56,6 +61,7 @@ public class menuPrincipalActivity extends AppCompatActivity {
                 Toast.makeText(menuPrincipalActivity.this,"Cerrando Sesion de "+ sesionactual.getUser(), Toast.LENGTH_SHORT).show();
                 sesionactual.setSesion(false);
                 sesionactual.setUser(null);
+                sesionactual.setSession(null);
                 startActivity(irALogin);
             }
         });

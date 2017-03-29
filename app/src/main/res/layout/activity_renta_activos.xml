@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="383dp"
+    android:layout_height="580dp"
+    android:background="@color/colorPrimary"
+    tools:context="edd.proyecto1_android.RentaActivos"
+    tools:theme="@style/FullscreenTheme"
+    >
+
+    <ImageView
+        android:id="@+id/ImagenEDD"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="128dp"
+        app:srcCompat="@mipmap/logo_edd"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="80dp" />
+
+    <TextView
+        android:id="@+id/lblCarga"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="59dp"
+        android:textColor="@color/colorText"
+        android:textSize="12pt"
+        android:text="TextView"
+        android:layout_below="@+id/ImagenEDD"
+        android:layout_alignStart="@+id/ImagenEDD"
+        android:layout_marginStart="43dp" />
+</RelativeLayout>
