@@ -1,0 +1,6 @@
+C:\Users\l_enr\documents\visual studio 2013\Projects\PruebaServidor\PruebaServidor\bin\PruebaServidor.dll.config
+C:\Users\l_enr\documents\visual studio 2013\Projects\PruebaServidor\PruebaServidor\bin\PruebaServidor.dll
+C:\Users\l_enr\documents\visual studio 2013\Projects\PruebaServidor\PruebaServidor\bin\PruebaServidor.pdb
+C:\Users\l_enr\documents\visual studio 2013\Projects\PruebaServidor\PruebaServidor\obj\Release\PruebaServidor.csprojResolveAssemblyReference.cache
+C:\Users\l_enr\documents\visual studio 2013\Projects\PruebaServidor\PruebaServidor\obj\Release\PruebaServidor.dll
+C:\Users\l_enr\documents\visual studio 2013\Projects\PruebaServidor\PruebaServidor\obj\Release\PruebaServidor.pdb
